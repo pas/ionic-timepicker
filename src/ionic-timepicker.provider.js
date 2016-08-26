@@ -7,7 +7,8 @@ angular.module('ionic-timepicker.provider', [])
       closeLabel: 'Close',
       inputTime: (((new Date()).getHours() * 60 * 60) + ((new Date()).getMinutes() * 60)),
       format: 12,
-      step: 15
+      step: 15,
+      cancelCallback: function() {}, //NOOP
     };
 
     this.configTimePicker = function (inputObj) {
@@ -140,7 +141,10 @@ angular.module('ionic-timepicker.provider', [])
 
         buttons.push({
           text: $scope.mainObj.closeLabel,
-          type: 'button_close'
+          type: 'button_close',
+          onTap: function(e) {
+            $scope.mainObj.cancelCallback();
+          }
         });
 
         $scope.popup = $ionicPopup.show({
